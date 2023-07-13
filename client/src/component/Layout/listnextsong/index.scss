@@ -1,0 +1,243 @@
+.listmusic {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+
+    .nextsong__option {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        color: var(--white-color);
+
+        .nextsong__option-wrapper {
+            width: 230px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #4B206E;
+            margin-left: 5px;
+            border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            -ms-border-radius: 50px;
+            -o-border-radius: 50px;
+            font-size: 12px;
+
+            .nextsong__option-wrapper--active {
+                background-color: #816399;
+            }
+
+            .nextsong__option-wrapper-listplay {
+                width: 120px;
+                padding: 0 4px;
+                height: 28px;
+                line-height: 30px;
+                text-align: center;
+                margin: 0 3px;
+                cursor: pointer;
+                border-radius: 30px;
+            }
+        }
+
+        .nextsong__option-alarm,
+        .nextsong__option-more {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 7px 9px;
+            margin-left: 7px;
+            font-size: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    .wrap__nextsong__box {
+        flex: 1;
+        position: relative;
+
+        .nextsong__box {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            overflow-y: scroll;
+
+            .nextsong__fist,
+            .nextsong__last {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                user-select: none;
+                margin-bottom: 10px;
+
+                // .nextsong__fist-item-playbtn--active {
+                //     background-color: var(--primary-color);
+                // }
+
+                // .nextsong__item {
+                //     width: 313px;
+                //     height: 56px;
+                //     border-radius: 5px;
+                //     display: flex;
+                //     align-items: center;
+
+                //     &:hover {
+                //         background-color: rgba(255, 255, 255, 0.1);
+                //     }
+
+                //     .nextsong__item-img {
+                //         width: 40px;
+                //         height: 40px;
+                //         border-radius: 4px;
+                //         margin-left: 8px;
+                //         margin-right: 10px;
+                //         background-size: contain;
+                //         background-repeat: no-repeat;
+                //         display: flex;
+                //         cursor: pointer;
+                //         position: relative;
+                //         justify-content: center;
+                //         align-items: center;
+
+                //         &::before {
+                //             content: "";
+                //             position: absolute;
+                //             height: 100%;
+                //             width: 100%;
+                //             top: 0;
+                //             left: 0;
+                //             z-index: 1;
+                //         }
+
+                //         .nextsong__item-playbtn {
+                //             font-size: 15px;
+                //             color: #fff;
+                //             margin: auto;
+                //             background-color: rgba(0, 0, 0, 0.5);
+                //             width: 40px;
+                //             height: 40px;
+                //             display: flex;
+                //             justify-content: center;
+                //             align-items: center;
+                //             border-radius: 4px;
+                //             position: relative;
+
+                //             // display: none;
+                //             img {
+                //                 height: 100%;
+                //                 width: 100%;
+                //                 object-fit: contain;
+                //             }
+                //         }
+
+                //         .songs-item-left-img-playing-box {
+                //             width: max-content;
+                //             height: max-content;
+                //             background-color: rgba(0, 0, 0, 0.5);
+                //             display: none;
+                //             border-radius: 4px;
+                //             position: absolute;
+                //             top: 50%;
+                //             left: 50%;
+                //             transform: translate(-50%, -50%);
+
+                //             img {
+                //                 margin: auto;
+                //                 width: 20px;
+                //                 height: 20px;
+                //                 cursor: pointer;
+                //             }
+                //         }
+
+                //         .songs-item-left-play-icon {
+                //             position: absolute;
+                //             color: #fff;
+                //             display: flex;
+                //         }
+                //     }
+
+                //     .nextsong__item-body {
+                //         display: flex;
+                //         flex-direction: column;
+                //         // width: 172px;
+                //         width: 80%;
+                //         cursor: default;
+
+                //         .nextsong__item-body-heading {
+                //             font-size: 14px;
+                //             color: #fff;
+                //             font-weight: 500;
+                //             padding-bottom: 4px;
+                //             text-overflow: ellipsis;
+                //             white-space: nowrap;
+                //             overflow: hidden;
+                //         }
+
+                //         .nextsong__item-body-depsc {
+                //             font-size: 12px;
+                //             color: rgba(255, 255, 255, 0.5);
+                //             font-weight: 500;
+                //             text-overflow: ellipsis;
+                //             white-space: nowrap;
+                //             overflow: hidden;
+                //         }
+                //     }
+
+                //     .nextsong__item-action {
+                //         width: 55px;
+                //         font-size: 14px;
+                //         margin-left: auto;
+                //         display: flex;
+                //         align-items: center;
+                //         justify-content: space-between;
+                //         margin-right: 10px;
+                //         // display: none;
+
+
+                //         .nextsong__item-action-heart {
+                //             position: relative;
+                //             color: #fff;
+
+                //             &::after {
+                //                 content: "";
+                //                 position: absolute;
+                //                 height: 100%;
+                //                 width: 100%;
+                //                 top: 0;
+                //                 left: 0;
+                //             }
+                //         }
+
+                //         .nextsong__item-action-dot {
+                //             padding: 5px;
+                //             color: #fff;
+                //             border-radius: 50%;
+                //             display: flex;
+                //             justify-content: center;
+                //             align-items: center;
+                //             cursor: pointer;
+
+                //             &:hover {
+                //                 background-color: rgba(255, 255, 255, 0.1);
+                //             }
+                //         }
+                //     }
+                // }
+
+                .nextsong__last-list {
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+
+            .nextsong__last-heading {
+                color: #fff;
+                margin: 20px 0 10px 10px;
+            }
+        }
+
+        .nextsong__box::-webkit-scrollbar {
+            display: none;
+        }
+
+    }
+}

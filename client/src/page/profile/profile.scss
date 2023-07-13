@@ -1,0 +1,215 @@
+@use "../../colors.scss";
+
+@keyframes test {
+    from {
+        clip-path: circle(0% at 100% 0%);
+    }
+
+    to {
+        clip-path: circle(150% at 100% 0%);
+    }
+}
+
+.profilepage {
+    height: 100%;
+    background-image: url(colors.$backgroundimage);
+    background-color: colors.$backgroundcolor;
+    transition: clip-path ease 1s;
+    clip-path: circle(0% at 100% 0%);
+    animation: test ease 1s forwards;
+
+    .wrapprofile {
+        flex-direction: column;
+        display: flex;
+        overflow-y: scroll;
+        height: 100%;
+
+        .contentuser {
+            height: 500px;
+            padding: 0 180px;
+            position: relative;
+            flex-shrink: 0;
+
+            .wrapcontentuser {
+                height: 100%;
+                width: 100%;
+                position: relative;
+                min-width: 950px;
+                flex-direction: column;
+                display: flex;
+
+                .backgroundavatar {
+                    flex: 1;
+                    border-radius: 10px;
+                    position: relative;
+                    background-color: rgb(31 41 55 / 0.5);
+                    background: linear-gradient(to bottom left, rgb(55 65 81 / 0.5), rgb(0 0 0 / 0));
+
+                    .wrapbtnfuntion {
+                        position: absolute;
+                        width: max-content;
+                        height: max-content;
+                        right: 30px;
+                        bottom: 25px;
+                        direction: rtl;
+
+                        .btnfuntion {
+                            padding: 7px 20px;
+                            font-size: 16px;
+                            font-weight: 700;
+                            color: #fff;
+                            background-color: rgba(0, 0, 0, 0.4);
+                            border-radius: 6px;
+                            width: max-content;
+                            margin-top: 10px;
+                            cursor: pointer;
+
+                            svg {
+                                margin-right: 8px;
+                            }
+
+                        }
+                    }
+                }
+
+                .user {
+                    height: 122px;
+                    padding: 0 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .avatar {
+                        position: absolute;
+                        width: 167px;
+                        height: 167px;
+                        bottom: 0;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        border: 4px solid transparent;
+
+                        img {
+                            height: 100%;
+                            width: 100%;
+                            object-fit: contain;
+                        }
+                    }
+
+                    .detail {
+                        margin-left: 175px;
+                        padding-left: 20px;
+                        width: max-content;
+                        flex: 1;
+
+                        .username {
+                            color: #fff;
+                            font-size: 30px;
+                            font-weight: 600;
+                        }
+
+                        .follow {
+                            margin-top: 10px;
+                            display: flex;
+                            color: #fff;
+
+                            span {
+                                margin: 0 5px;
+                                border: 1px solid rgba(200, 200, 200, 0.3);
+                            }
+                        }
+                    }
+
+                    .functionofuser {
+                        direction: rtl;
+
+                        .wrapbtnfunction {
+                            display: flex;
+                            margin-bottom: 10px;
+
+                            .addnew {
+                                color: #fff;
+                                padding: 7px 10px;
+                                background: colors.$color-background;
+                                border-radius: 7px;
+                                margin-right: 10px;
+                                cursor: pointer;
+
+                                svg {
+                                    margin-right: 5px;
+                                }
+                            }
+
+                            .updateinfor {
+                                padding: 7px 10px;
+                                background-color: rgba(255, 255, 255, .1);
+                                border-radius: 7px;
+                                color: #fff;
+                                cursor: pointer;
+
+                                svg {
+                                    margin-right: 5px;
+                                }
+                            }
+
+                        }
+
+                        .btnsuggetfollew {
+                            font-size: 16px;
+                            padding: 7px 15px;
+                            background-color: rgba(255, 255, 255, .1);
+                            width: max-content;
+                            color: #fff;
+                            border-radius: 8px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .profilecontent {
+            flex: 1 1;
+            padding: 0 180px;
+
+            .wrapcontent {
+                height: 100%;
+                width: 100%;
+                min-width: 950px;
+                margin-top: 30px;
+                display: flex;
+
+                .sidebarcontent {
+                    width: 300px;
+                    height: max-content;
+                    color: #fff;
+                    // padding: 10px 20px;
+
+                    .introduce,
+                    .music,
+                    .frend {
+                        font-size: 21px;
+                        font-weight: 600;
+                        // background-color: #34224f;
+                        background-color: rgb(31 41 55 / 0.5);
+                        background: linear-gradient(to bottom left, rgb(55 65 81 / 0.5), rgb(0 0 0 / 0));
+                        padding: 10px 20px;
+                        margin-bottom: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        border-radius: 5px;
+
+                        svg {
+                            font-size: 16px;
+                        }
+                    }
+                }
+
+                .containcontent {
+                    flex: 1 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
