@@ -1,36 +1,38 @@
 import "./header.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons"
-import { faUser } from "@fortawesome/free-solid-svg-icons"
-import { faGear } from "@fortawesome/free-solid-svg-icons"
+import { faUser, faGear } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
-import Login from "../../login/login"
 import { USER_ACTION, useUserData } from "../../../context/userContext"
 import { baseimage } from "../../../fetch/index"
-import { uploadsong } from "../../../fetch/user"
+import { logout } from "../../../fetch/user"
 
-function Header() {
+function Header({ type = "base" }) {
     const [user, dispatchUser] = useUserData()
+    console.log(user)
 
-
-    function handlelogout(e) {
-        window.localStorage.removeItem("token")
-        dispatchUser({ type: USER_ACTION.REMOVE })
-    }
-    async function handleuploadsong(e) {
-        const a = document.querySelector("#test")
-        await uploadsong(a.files[0])
+    async function handlelogout(e) {
+        logout()
+            .then((rs) => {
+                if (rs === 200) {
+                    window.localStorage.removeItem("token")
+                    dispatchUser({ type: USER_ACTION.REMOVE })
+                }
+            })
     }
 
     return (
         <div className="header">
             <div className="wrap-header">
-                <div className="header-item1">
-                    <Link to={"/"} className="wrap-logo">
-                        <img className="logo" src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg"></img>
-                    </Link>
-
-                </div>
+                {
+                    type === "full" ?
+                        <div className="header-item1">
+                            <Link to={"/"} className="logo">
+                                <img src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg" />
+                            </Link>
+                        </div> :
+                        <></>
+                }
                 <div className="header-item2">
                     <div className="wrap-search">
                         <div className="icon-search">
@@ -40,8 +42,6 @@ function Header() {
                     </div>
                 </div>
                 <div className="header-item3">
-
-
                     <div className="header-item3-item">
                         <div className="setting">
                             <FontAwesomeIcon icon={faGear} />
@@ -71,17 +71,21 @@ function Header() {
                                     <div className="popupuser-itemuser">
                                         <label className="title">Cá nhân</label>
                                     </div>
+                                    {
+                                        user?.roleName !== "user" ?
+                                            <div className="popupuser-itemuser">
+                                                <Link to={"/profile"} className="profile">
+                                                    <FontAwesomeIcon icon={faUser} />
+                                                    <span>Hồ sơ</span>
+                                                </Link>
+                                            </div> :
+                                            <></>
+                                    }
                                     <div className="popupuser-itemuser">
-                                        <Link to={"/profile"} className="profile">
-                                            <FontAwesomeIcon icon={faUser} />
-                                            <span>Hồ sơ</span>
-                                        </Link>
-                                    </div>
-                                    <div className="popupuser-itemuser">
-                                        <div className="upload">
+                                        <Link to={"/songupload"} className="upload">
                                             <FontAwesomeIcon icon={faArrowUpFromBracket} />
                                             <span>Tải lên</span>
-                                        </div>
+                                        </Link>
                                     </div>
                                     <div className="popupuser-itemuser">
                                         <div className="logout" onClick={handlelogout}>
@@ -93,7 +97,11 @@ function Header() {
                         </div>
                             :
                             <>
-                                <Login />
+                                <Link to={"/login"} className="header-item3-item-signup">
+                                    <div>
+                                        login
+                                    </div>
+                                </Link>
                                 <Link to={"/signup"} className="header-item3-item-signup">
                                     <div>
                                         Sign up

@@ -7,6 +7,24 @@
     background-color: rgba(255, 255, 255, 0.05);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 
+    .sidebar_logo {
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+
+        a {
+            width: 70%;
+            height: 100%;
+
+            .logo {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
     .sidebar__persional,
     .sidebar__library,
     .sidebar__library-bot {
@@ -31,6 +49,11 @@
                 padding-left: var(--side-padding);
                 cursor: pointer;
                 font-size: 17px;
+
+                a {
+                    color: #fff;
+                    text-decoration: none;
+                }
 
                 svg {
                     margin-right: 10px;
@@ -91,6 +114,7 @@
         }
 
         .js__toast {
+            text-decoration: none;
             background-color: #ffdb00;
             padding: 6px;
             border-radius: 20px;

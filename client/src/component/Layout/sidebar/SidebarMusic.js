@@ -18,33 +18,38 @@ function SidebarMusic() {
 
     return (
         <div className="sidebare">
+            <div className="sidebar_logo">
+                <Link to={"/"} className="wrap-logo">
+                    <img className="logo" src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg"></img>
+                </Link>
+
+            </div>
             <div className="sidebar__persional">
                 <ul className="sidebar__list">
-                    <Link to={'/music'} className={`sidebar__item ${checkactiveitem === '/music' ? 'sidebar__item--active' : ''}`}>
+                    <Link to={'/'} className={`sidebar__item ${checkactiveitem === '/' ? 'sidebar__item--active' : ''}`}>
                         <FontAwesomeIcon icon={faCirclePlay} />
                         Cá Nhân
                     </Link>
-                    <Link to={'/music/khampha'} className={`sidebar__item ${checkactiveitem === '/music/khampha' ? 'sidebar__item--active' : ''}`}>
+                    <Link to={'/khampha'} className={`sidebar__item ${checkactiveitem === '/khampha' ? 'sidebar__item--active' : ''}`}>
                         <FontAwesomeIcon icon={faCompactDisc} />
                         Khám Phá
                     </Link>
-                    <Link to={'/music/zingchart'} className={`sidebar__item ${checkactiveitem === '/music/zingchart' ? 'sidebar__item--active' : ''}`}>
+                    <Link to={'/zingchart'} className={`sidebar__item ${checkactiveitem === '/zingchart' ? 'sidebar__item--active' : ''}`}>
                         <FontAwesomeIcon icon={faArrowTrendUp} />
                         #zingchart
                     </Link>
-                    <Link to={'/music/radio'} className={`sidebar__item sidebar__item-radio js__toast  ${checkactiveitem === '/music/radio' ? 'sidebar__item--active' : ''} `}>
+                    <Link to={'/radio'} className={`sidebar__item sidebar__item-radio js__toast  ${checkactiveitem === '/radio' ? 'sidebar__item--active' : ''} `}>
                         <FontAwesomeIcon icon={faRadio} />
                         Radio
                         <span>Live</span>
                     </Link>
-                    <Link to={'/music/follow'} className={`sidebar__item js__toast  ${checkactiveitem === '/music/follow' ? 'sidebar__item--active' : ''}`}>
+                    <Link to={'/follow'} className={`sidebar__item js__toast  ${checkactiveitem === '/follow' ? 'sidebar__item--active' : ''}`}>
                         <FontAwesomeIcon icon={faRectangleList} />
                         Theo Dõi
                     </Link>
                 </ul>
             </div>
             <div className="distance"></div>
-
             <div className="sidebar__library">
                 <div className="wrap__sidebar__library">
                     <div className="sidebar__library-top">
@@ -69,7 +74,7 @@ function SidebarMusic() {
                     </div>
                     <div className="sidebar__library-center">
                         <span className="sidebar__library-center-vip-heading">Nghe nhạc không quảng cáo cùng kho nhạc VIP</span>
-                        <span className="sidebar__library-center-vip-body js__toast">Nâng cấp VIP</span>
+                        <Link to={"/vip"} className="js__toast">Nâng cấp VIP</Link>
                     </div>
                     <div className="sidebar__library-bot">
                         <div className="sidebar__library-bot-heading">
@@ -77,8 +82,10 @@ function SidebarMusic() {
                         </div>
                         <ul className="sidebar__list">
                             <li className="sidebar__item">
-                                <FontAwesomeIcon icon={faMusic} />
-                                Bài hát
+                                <Link to={"songupload"}>
+                                    <FontAwesomeIcon icon={faMusic} />
+                                    Bài hát
+                                </Link>
                             </li>
                             <li className="sidebar__item">
                                 <FontAwesomeIcon icon={faCompactDisc} />

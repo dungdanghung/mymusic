@@ -1,0 +1,113 @@
+@use "../../colors.scss";
+
+.login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: colors.$color-background;
+
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        width: 410px;
+        padding: 30px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+
+        .text {
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .wrap-container {
+            .data {
+                height: 30px;
+                width: 100%;
+                margin-bottom: 40px;
+
+                .label {
+                    font-size: 18px;
+                }
+
+                input {
+                    height: 100%;
+                    width: 100%;
+                    font-size: 17px;
+                    border: 1px solid silver;
+                }
+
+            }
+
+            .forgot-pass {
+                margin-top: -8px;
+
+                a {
+                    color: #3498db;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .btn {
+                margin: 30px 0;
+                height: 45px;
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+
+                &:hover {
+                    .inner {
+                        left: 0;
+                    }
+                }
+
+                .inner {
+                    height: 100%;
+                    width: 200%;
+                    position: absolute;
+                    left: -100%;
+                    top: 0;
+                    z-index: -1;
+                    background: colors.$color-background;
+                    transition: all 0.4s;
+                }
+
+                button {
+                    height: 100%;
+                    width: 100%;
+                    background: none;
+                    border: none;
+                    color: #fff;
+                    font-size: 18px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                }
+
+            }
+
+            .signup-link {
+                text-align: center;
+
+                a {
+                    color: #3498db;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

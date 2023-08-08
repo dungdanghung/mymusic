@@ -1,22 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShuffle, faBackwardStep, faForwardStep, faRepeat, faCirclePause } from "@fortawesome/free-solid-svg-icons"
 import { faCirclePlay } from "@fortawesome/free-regular-svg-icons"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
+import { useSongData, SONG_ACTION } from "../../../context/songContext"
+import { SetHistorySong } from "../../../fetch/song"
 
 function MainItemMusicController({ data }) {
+    const [, dispatchSong] = useSongData()
     const audio = useRef();
     const [btn_playofpause, set_btn_playofpause] = useState(true);
     const [currentimevalue, setcurrentimevalue] = useState("0:00");
     const [duration, setduration] = useState("0:00");
     const [currentTimeupdate, setcurrentTimeupdate] = useState(true)
+    const [loop, setloop] = useState(false)
+    const [next, setnext] = useState(false)
 
     function handlechangbtnplayofpause(e) {
         if (!btn_playofpause) {
             set_btn_playofpause(true)
             audio.current.pause()
+            dispatchSong({ type: SONG_ACTION.PAUSE })
         } else {
             set_btn_playofpause(false)
             audio.current.play()
+            dispatchSong({ type: SONG_ACTION.PLAY })
         }
     }
     function Handlemousedow(e) {
@@ -42,9 +49,9 @@ function MainItemMusicController({ data }) {
         let value = (e.screenX - min) / main * 100;
         if (value > 0 && value < 100) {
             handlecurenttime(parseInt(value.toFixed(2) / 100 * audio.current.duration))()
-        } else if (value < 0.5) {
-            handlecurenttime(0)()
-        } else {
+        } else if (value <= 0) {
+            handlecurenttime(0.1)()
+        } else if (value >= 100) {
             handlecurenttime(audio.current.duration)()
         }
         if (value <= 0) handlethanhchayplay({}, 0);
@@ -70,7 +77,7 @@ function MainItemMusicController({ data }) {
 
     function handlecurenttime(data = false) {
         return (e) => {
-            if (currentTimeupdate && !data) {
+            if (currentTimeupdate && data === false) {
                 let a = Math.floor(audio.current.currentTime / 60)
                 let b = Math.floor(audio.current.currentTime - a * 60)
                 if (b < 10) {
@@ -91,17 +98,79 @@ function MainItemMusicController({ data }) {
         }
     }
 
+    function handlebtnaction(e) {
+        // if (e.target.className.includes("active")) {
+        //     // e.target.classList.remove("active")
+        //     if (e.target.className.includes("loop")) {
+        //         setloop(false)
+        //     } else if (e.target.className.includes("next")) {
+        //         setnext(false)
+        //     }
+        // } else {
+        //     e.target.classList.add("active")
+        //     if (e.target.className.includes("loop")) {
+        //         if (next) {
+        //             setnext(false)
+        //             setloop(true)
+        //         }
+        //     } else if (e.target.className.includes("next")) {
+        //         if (loop) {
+        //             setloop(false)
+        //             setnext(true)
+        //         }
+        //     }
+        // }
+        if (e.target.className.includes("loop")) {
+            if (loop) {
+                setloop(false)
+            } else {
+                if (next) setnext(false)
+                setloop(true)
+            }
+        } else {
+            if (next) {
+                setnext(false)
+            } else {
+                if (loop) setloop(false)
+                setnext(true)
+            }
+        }
+    }
+    function nextofprivesongdown(e) {
+        e.target.classList.add("active")
+    }
+    function nextofprivesongup(e) {
+        e.target.classList.remove("active")
+        if (e.target.className.includes("next")) {
+            dispatchSong({ type: SONG_ACTION.PAUSE });
+            dispatchSong({ type: SONG_ACTION.NEXT })
+        } else {
+            dispatchSong({ type: SONG_ACTION.PAUSE });
+            dispatchSong({ type: SONG_ACTION.BACK })
+        }
+    }
+
+    useEffect(() => {
+        if (data && data.play) {
+            audio.current.play()
+            set_btn_playofpause(false)
+        } else if (data && !data.play) {
+            set_btn_playofpause(true)
+            audio.current.pause()
+        }
+    }, [data])
+
     return (
         <div className="itemplaymusic">
             <div className='controplay'>
-                <div className='cssbtnplay active'><FontAwesomeIcon icon={faShuffle} /></div>
-                <div className='cssbtnplay'><FontAwesomeIcon icon={faBackwardStep} /></div>
+                <div className={`cssbtnplay next ${next ? 'active' : ""}`} onClick={handlebtnaction}><FontAwesomeIcon icon={faShuffle} /></div>
+                <div className='cssbtnplay back' onMouseDown={nextofprivesongdown} onMouseUp={nextofprivesongup}><FontAwesomeIcon icon={faBackwardStep} /></div>
                 <div className='cssbtnplaymusic' onClick={handlechangbtnplayofpause}>
                     <FontAwesomeIcon icon={faCirclePlay} className={`playclick ${btn_playofpause ? "" : "activebtnplay"}`} />
                     <FontAwesomeIcon icon={faCirclePause} className={`pauseclick ${btn_playofpause ? "activebtnplay" : ""}`} />
                 </div>
-                <div className='cssbtnplay'><FontAwesomeIcon icon={faForwardStep} /></div>
-                <div className='cssbtnplay'><FontAwesomeIcon icon={faRepeat} /></div>
+                <div className='cssbtnplay next' onMouseDown={nextofprivesongdown} onMouseUp={nextofprivesongup}><FontAwesomeIcon icon={faForwardStep} /></div>
+                <div className={`cssbtnplay loop ${loop ? 'active' : ""}`} onClick={handlebtnaction}><FontAwesomeIcon icon={faRepeat} /></div>
             </div>
             <div className="musicplaying">
                 <div className="wrapmusicplaying">
@@ -115,7 +184,24 @@ function MainItemMusicController({ data }) {
                 {
                     data ?
                         <>
-                            <audio ref={audio} id="music" src={data.music} onEnded={() => { set_btn_playofpause(true) }} onTimeUpdate={handlecurenttime()} onLoadedMetadata={(e) => { setdurationtime(e.target.duration) }}></audio>
+                            <audio ref={audio}
+                                id="music"
+                                src={data.music}
+                                onEnded={async () => {
+                                    await SetHistorySong(data.songID)
+                                    if (!loop && next) {
+                                        set_btn_playofpause(true);
+                                        dispatchSong({ type: SONG_ACTION.PAUSE });
+                                        dispatchSong({ type: SONG_ACTION.NEXT })
+                                    } else if (loop && !next) {
+                                        audio.current.play()
+                                    } else {
+                                        dispatchSong({ type: SONG_ACTION.PAUSE });
+                                    }
+                                }}
+                                onTimeUpdate={handlecurenttime()}
+                                onLoadedMetadata={(e) => { setdurationtime(e.target.duration) }}
+                            ></audio>
                         </>
                         :
                         <></>

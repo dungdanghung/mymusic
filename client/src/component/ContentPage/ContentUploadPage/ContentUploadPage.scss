@@ -1,0 +1,50 @@
+.contentuploadsong {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+
+    .titlepage {
+        height: 150px;
+        display: flex;
+        color: #fff;
+        align-items: center;
+        margin: 0 45px;
+        // border-bottom: 1px solid #ddd;
+
+        .texttitle {
+            margin-right: 15px;
+        }
+
+        .iconplay {
+            font-size: 40px;
+        }
+    }
+
+    .distance {
+        display: flex;
+        margin: 0 45px;
+        align-items: center;
+        color: #fff;
+
+        .type {
+            cursor: pointer;
+            margin-right: 15px;
+            font-size: 19px;
+            font-weight: 600;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        span {
+            border-top: 1px solid #ddd;
+            flex: 1;
+        }
+    }
+
+    .listsongupload {
+        flex: 1;
+        margin: 30px 45px 30px 45px;
+    }
+}

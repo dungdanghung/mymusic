@@ -9,10 +9,10 @@ const fileUpload = require("express-fileupload")
 const PORT = parseInt(process.env['PORT'])
 const app = express()
 
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static("./store/images"))
 app.use(express.json())
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     "preflightContinue": false,
 }))
 

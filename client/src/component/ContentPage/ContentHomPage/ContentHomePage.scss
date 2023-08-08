@@ -1,0 +1,38 @@
+.content {
+    .slicesonghot {
+        height: 200px;
+        margin: 0 20px;
+        overflow: hidden;
+
+        .wrapslicesonghot {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            display: flex;
+            // margin: 0 -10px;
+
+            .sliceitem {
+                width: 33.333%;
+                height: 100%;
+                // padding: 0 10px;
+                position: absolute;
+                left: 100%;
+
+                .wrapsliceitem {
+                    height: 100%;
+                    padding: 0 10px;
+
+                    .wrapthumbnailsliceimg {
+                        height: 100%;
+
+                        img {
+                            height: 100%;
+                            object-fit: contain;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

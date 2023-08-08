@@ -43,11 +43,12 @@ function Signup() {
             }
             if (item === "password") {
                 const a = Array.from(data[item]).every((item) => {
-                    if (parseInt(item)) return true
-                    else return false
+                    if (!isNaN(parseInt(item))) return true
+                    return false
                 })
-                if (!a || data[item].length < 8) {
+                if (!a || data[item].length < 6) {
                     check = false
+                    console.log(123)
                 }
             }
         })

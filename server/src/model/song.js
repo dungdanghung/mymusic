@@ -1,9 +1,10 @@
 class Song {
-    constructor(songID, songName, songFile, date, image, userID, typeID, heart, description, singer) {
+    constructor(songID, songName, songFile, date, thumbnail, image, userID, typeID, heart, description, singer) {
         this.songID = songID
         this.songName = songName
         this.songfile = songFile
         this.date = date
+        this.thumbnail = thumbnail
         this.typeID = typeID
         this.image = image
         this.userID = userID
@@ -23,6 +24,9 @@ class Song {
     }
     settoken(prop) {
         this.songtoken = prop
+    }
+    show() {
+        console.log(this.songID)
     }
     setlink(prop) {
         this.music = prop

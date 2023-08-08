@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react"
 import { baseimage } from "../../fetch/index"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import { uploadsong } from "../../fetch/user"
+import { uploadsong } from "../../fetch/song"
 import { useUserData } from "../../context/userContext"
 
 function Form_uploadsong({ closepopup }) {
@@ -11,54 +11,42 @@ function Form_uploadsong({ closepopup }) {
     const [backgrounduploadtype, setbackgrounduploadtype] = useState("normal")
     const [text, settext] = useState('')
     const [statusoffileinput, setstatusoffileinput] = useState("off")
-    const [onoffpopupthumbnail, setonoffpopupthumbnail] = useState("off")
-    const [filethumbnal, setfilethumbnal] = useState("")
     const [songname, setsongname] = useState("")
     const [authername, setauthername] = useState("")
+    const [imagesong, setimagesong] = useState("")
+    const [thumbnailsong, setthumbnailsong] = useState("")
     const heightofinputcomment = useRef()
 
-    function handleinputfile() {
-        const a = document.querySelector("#fileupload")
-        a.click()
-        setstatusoffileinput("off")
-    }
-    function handleaddthumbnail() {
-        const a = document.querySelector("#thumbnailfileupload")
-        a.click()
-    }
+
     function closepopupuploadfile(e) {
         if (e.target.className === "popupthemmoi" || e.target.className === "more") {
             closepopup()
         }
     }
-    function handlefileuploadinput(e) {
-        if (e.target.files.length !== 0) {
-            setstatusoffileinput("on")
-        } else {
-            setstatusoffileinput("off")
-        }
-    }
-    function handlethumbnalinput(e) {
-        const a = document.querySelector("#wrapdiskuploadthumbnail")
-        const b = document.querySelector("#diskuploadthumbnail")
-        var fr = new FileReader();
-        fr.onload = function () {
-            a.src = fr.result;
-            b.src = fr.result;
-        }
-        if (e.target.files.length !== 0) {
-            fr.readAsDataURL(e.target.files[0]);
-        }
-        setfilethumbnal("file")
-        setonoffpopupthumbnail("off")
-    }
     function uploadfile(e) {
-        const file = document.querySelector("#fileupload")
-        const image = document.querySelector("#thumbnailfileupload")
-        if (file.files[0]) {
+        const file = document.querySelector("#filesong")
+        const image = document.querySelector("#imagesong")
+        const thumbnail = document.querySelector("#thumbnailsong")
+        const data = {
+            filesong: file.files[0],
+            fileimage: image.files[0],
+            filethumbnail: thumbnail.files[0],
+            songname: songname,
+            imagename: imagesong,
+            thumbnailname: thumbnailsong,
+            singer: authername
+        }
+        const checkitem = Array.from(data).every((item) => {
+            if (!item) return false
+            else return true
+        })
+        if (!checkitem) {
+            console.log("dien day du thong tin")
+            return
+        } else {
             let token = window.localStorage.getItem("token")
             token = JSON.parse(token)
-            uploadsong({ song: file.files[0], image: image.files[0] }, songname, authername, token.accessToken)
+            uploadsong(data, token.accessToken)
         }
     }
     function changetypeupload(e) {
@@ -71,7 +59,6 @@ function Form_uploadsong({ closepopup }) {
             heightofinputcomment.current.style.height = heightofinputcomment.current.scrollHeight + "px"
         }
     }, [text])
-
     useEffect(() => {
         const a = document.querySelector(".wrapdisk")
         const b = document.querySelector(".disk")
@@ -79,14 +66,54 @@ function Form_uploadsong({ closepopup }) {
             if (statusoffileinput === "off") {
                 a.style.left = "0%"
                 b.style.left = "0%"
-                setonoffpopupthumbnail("off")
             } else {
                 a.style.left = "-30%"
                 b.style.left = "25%"
-                setonoffpopupthumbnail("on")
             }
         }
     }, [statusoffileinput])
+    function clickchosefile(e) {
+        e.target.children[0]?.click()
+        setstatusoffileinput("off")
+    }
+    function handlefileinput(type) {
+        return (e) => {
+            if (type === "imagesong") {
+                setimagesong(e.target.files[0].name)
+                const a = document.querySelector("#wrapdiskuploadthumbnail")
+                const b = document.querySelector("#diskuploadthumbnail")
+                var fr = new FileReader();
+                fr.onload = function () {
+                    a.src = fr.result;
+                    b.src = fr.result;
+                }
+                fr.onloadend = () => {
+                    setstatusoffileinput("on")
+                    b.style.display = "block"
+                }
+                if (e.target.files.length !== 0) {
+                    fr.readAsDataURL(e.target.files[0]);
+                }
+            } else if (type === "namesong") {
+                setsongname(e.target.files[0].name)
+                setstatusoffileinput("on")
+            } else if (type === "thumbnailsong") {
+                setthumbnailsong(e.target.files[0].name)
+                const a = document.querySelector(".thumbnailsong")
+                var fr = new FileReader();
+                fr.onload = function () {
+                    a.src = fr.result;
+                }
+                fr.onloadend = () => {
+                    a.style.display = "block"
+                    setstatusoffileinput("on")
+                }
+                if (e.target.files.length !== 0) {
+                    fr.readAsDataURL(e.target.files[0]);
+                }
+            }
+        }
+    }
 
     return (
         <form className="popupthemmoi" onClick={closepopupuploadfile}>
@@ -114,25 +141,17 @@ function Form_uploadsong({ closepopup }) {
                         </div>
                     </div>
                     <div className="maincontent">
-                        <input name="inputfilesong" id="fileupload" type="file" onInput={handlefileuploadinput} />
-                        <div className="content" onClick={handleinputfile}>
+                        <div className="content">
                             <div className="wrapdisk">
-                                <img id="wrapdiskuploadthumbnail" className={filethumbnal !== "" ? "image" : ""} src="http://localhost:4000/images/orther/music_128x128.png" />
+                                <img id="wrapdiskuploadthumbnail" className={""} src="http://localhost:4000/orther/music_128x128.png" />
                             </div>
                             <div className="disk" style={{ left: "0%", animationPlayState: 'paused' }}>
-                                <img id="diskuploadthumbnail" className={filethumbnal !== "" ? "image" : ""} src="http://localhost:4000/images/orther/music_128x128.png" />
+                                <img id="diskuploadthumbnail" className={""} src="" style={{ display: "none" }} />
                             </div>
                         </div>
+                        <img className="thumbnailsong" src="" style={{ display: "none" }} />
                     </div>
-                    <div className="popupaddthumbnail" style={{ display: onoffpopupthumbnail === "off" ? "none" : "flex" }}>
-                        <div className="wrappopupaddthumbnail">
-                            <div className="btnaction">
-                                <input name="inputfileimage" id="thumbnailfileupload" type="file" style={{ display: "none" }} onInput={handlethumbnalinput} />
-                                <div className="agree"><span onClick={handleaddthumbnail}>add thumbnail</span></div>
-                                <div className="disagree"><span onClick={() => { setonoffpopupthumbnail("off") }}>close</span></div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div className="detailinfor">
                         <div className="wrapinfor">
                             <textarea
@@ -142,6 +161,40 @@ function Form_uploadsong({ closepopup }) {
                                 placeholder="name song"
                                 value={songname}
                             />
+                            <div className="btnsetfile" onClick={clickchosefile}>
+                                chose file
+                                <input id="filesong" type="file" onInput={handlefileinput("namesong")} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="detailinfor">
+                        <div className="wrapinfor">
+                            <textarea
+                                name="inputimagesong"
+                                ref={heightofinputcomment}
+                                onInput={(e) => { setimagesong(e.target.value) }}
+                                placeholder="image song"
+                                value={imagesong}
+                            />
+                            <div className="btnsetfile" onClick={clickchosefile}>
+                                chose file
+                                <input id="imagesong" type="file" onInput={handlefileinput("imagesong")} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="detailinfor">
+                        <div className="wrapinfor">
+                            <textarea
+                                name="inputthumbnailsong"
+                                ref={heightofinputcomment}
+                                onInput={(e) => { setthumbnailsong(e.target.value) }}
+                                placeholder="thumbnail song"
+                                value={thumbnailsong}
+                            />
+                            <div className="btnsetfile" onClick={clickchosefile}>
+                                chose file
+                                <input id="thumbnailsong" type="file" onInput={handlefileinput("thumbnailsong")} />
+                            </div>
                         </div>
                     </div>
                     <div className="detailinfor">

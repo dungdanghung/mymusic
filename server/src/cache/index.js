@@ -1,5 +1,7 @@
-const { SongInit, songs, UploadSong } = require("./song")
-const { UserInit, users } = require("./user")
+const { SongInit, songs, UploadSong, GetSongByID } = require("./song")
+const { UserInit, users, CreateNewUser, GetUser } = require("./user")
+const { GetHeart, DeleteHeart, SetHeart } = require("./interact")
+const { GetListeningHistory, SetNewHistorySong, UpdateHistorySong } = require("./history")
 const refreshtoken = []
 
 async function InitCache() {
@@ -7,7 +9,7 @@ async function InitCache() {
     try {
         const results = await Promise.allSettled([
             SongInit(),
-            UserInit()
+            // UserInit()
         ])
         results.forEach(promise => {
             if (promise.status === 'rejected') throw new Error('Fail to initialize data')
@@ -19,4 +21,19 @@ async function InitCache() {
     }
 }
 
-module.exports = { InitCache, songs, users, refreshtoken, UploadSong }
+module.exports = {
+    InitCache,
+    songs,
+    users,
+    refreshtoken,
+    UploadSong,
+    GetListeningHistory,
+    GetHeart,
+    DeleteHeart,
+    SetHeart,
+    CreateNewUser,
+    GetUser,
+    SetNewHistorySong,
+    UpdateHistorySong,
+    GetSongByID
+}

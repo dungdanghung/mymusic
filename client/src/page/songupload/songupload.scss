@@ -1,0 +1,17 @@
+@use "../../colors.scss";
+
+.uploadsongpage {
+    flex-direction: column;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(colors.$backgroundimage);
+    background-color: colors.$backgroundcolor;
+    animation: test ease 1s forwards;
+
+    .wrapcontentuploadpage {
+        display: flex;
+        overflow: hidden;
+        flex: 1 1;
+    }
+}

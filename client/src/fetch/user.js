@@ -30,6 +30,21 @@ async function login(data) {
 
 }
 
+async function logout() {
+    try {
+        let token = window.localStorage.getItem("token")
+        token = JSON.parse(token)
+        const rs = await requet.post("/user/logout", { RefreshToken: token.refreshToken }, {
+            headers: {
+                "Authorization": `accessToken ${token.accessToken}`
+            },
+        })
+        return rs.status
+    } catch (error) {
+        console.log('\x1b[31m%s\x1b[0m', `err users data: ${error.message}`)
+    }
+}
+
 async function getuser(token) {
     try {
         const rs = await requet.get("/user/getuser", {
@@ -43,28 +58,24 @@ async function getuser(token) {
     }
 }
 
-async function uploadsong(file, songname, authername, token) {
-    var formData = new FormData();
-    formData.append("filesong", file.song);
-    formData.append("fileimage", file.image);
-    formData.append("songname", songname)
-    formData.append("authername", authername)
-    try {
-        await requet.post('/user/uploadsong', formData, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
-            }
-        })
-    } catch (error) {
-        console.log(error)
-    }
+async function upgradevip() {
+    return new Promise(async (resolve, reject) => {
+        let token = window.localStorage.getItem("token")
+        if (token) {
+            token = JSON.parse(token)
+            const rs = await requet.post("/user/upgradevip", {}, {
+                headers: {
+                    "authorization": `accessToken ${token.accessToken}`,
+                }
+            })
+        }
+    })
 }
-
 
 export {
     register,
     login,
+    logout,
     getuser,
-    uploadsong
+    upgradevip
 }

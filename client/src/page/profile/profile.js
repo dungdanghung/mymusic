@@ -38,7 +38,7 @@ function Profile() {
         return (
             <div className="profilepage">
                 <div className="wrapprofile">
-                    <Header />
+                    <Header type="full" />
                     <div className="contentuser">
                         <div className="wrapcontentuser">
                             <div className="backgroundavatar">

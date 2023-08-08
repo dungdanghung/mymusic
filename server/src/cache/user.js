@@ -1,4 +1,4 @@
-const pool = require("../dataConnect/index")
+const pool = require("./database")
 const User = require("../model/user")
 
 const users = []
@@ -32,7 +32,7 @@ async function UserInit() {
     }
 }
 
-async function getUser(username) {
+async function GetUser(username) {
     try {
         const querystring = [
             "SELECT users.user_id, firstName, laseName, userName, birth, role_name, sex, email, phoneNumber, avartar, password, heart FROM music.users",
@@ -63,7 +63,9 @@ async function getUser(username) {
     }
 }
 
-async function createNewUser(data) {
+
+
+async function CreateNewUser(data) {
     try {
         const querystring = [
             "insert into users(firstName, laseName, userName, birth, role_id, sex, email, phoneNumber, password)",
@@ -78,7 +80,7 @@ async function createNewUser(data) {
 
 module.exports = {
     UserInit,
-    createNewUser,
-    getUser,
-    users
+    CreateNewUser,
+    GetUser,
+    users,
 }

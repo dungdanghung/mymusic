@@ -1,13 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCompactDisc, faFileAudio, faMicrophoneLines, faExpand, faVolumeLow } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 function RightItemMusicController() {
-
+    const volumeElement = useRef()
     const [indexvolume, setindexvolume] = useState(0.3)
 
     useEffect(() => {
-        document.querySelector(".nutrange").style.background = `linear-gradient(to right, black ${(indexvolume * 100)}%, #fff 0%)`
+        if (document.getElementById('music')) {
+            document.getElementById('music').volume = indexvolume
+        }
+        volumeElement.current.style.background = `linear-gradient(to right, black ${(indexvolume * 100)}%, #fff 0%)`
     }, [indexvolume])
 
     function xulymove(e, min, max) {
@@ -43,7 +46,7 @@ function RightItemMusicController() {
                         <div className='iconhover wrapactioniconitemvolum'><FontAwesomeIcon icon={faVolumeLow} className="kh" /></div>
                         <div className='wrapinputrange'>
                             <div className='rangevolume' onMouseDown={handlemousedow}>
-                                <div className='nutrange' style={{ background: "linear-gradient(to right, black 20%, #fff 0%)" }}></div>
+                                <div ref={volumeElement} className='nutrange' style={{ background: "linear-gradient(to right, black 20%, #fff 0%)" }}></div>
                             </div>
                         </div>
                     </div>

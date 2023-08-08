@@ -1,0 +1,205 @@
+@use "../../colors.scss";
+
+.upgradevip {
+    flex-direction: column;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-image: url(colors.$backgroundimage);
+    background-color: colors.$backgroundcolor;
+    overflow-y: scroll;
+
+    .hearder {
+        .wraphearder {
+            display: flex;
+            height: 70px;
+            margin: 0 200px;
+            justify-content: space-between;
+            align-items: center;
+
+            .wraplogo {
+                width: 150px;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+
+        .wrapoptionhearder {
+            display: flex;
+            color: #fff;
+            justify-content: center;
+
+            .upgrade,
+            .code,
+            .support {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 15px;
+                position: relative;
+                cursor: pointer;
+
+                .text {
+                    line-height: 29px;
+                }
+            }
+
+            .active {
+                color: #ffdb00;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    border-radius: 5px;
+                    background-color: #ffdb00;
+                }
+            }
+
+            .distance {
+                margin: 0px 15px;
+                border-left: 1px solid #bdbdbd;
+            }
+
+            .user {
+                display: flex;
+                align-items: center;
+
+                .wrapuser {
+                    width: 50px;
+                    height: 50px;
+                    margin-left: 15px;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
+                }
+
+                .btnlogin {
+                    margin-left: 15px;
+                    padding: 10px 20px;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    background-color: rgb(96, 16, 133);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .content {
+        margin: 30px 200px 200px 200px;
+
+        .title {
+            margin-bottom: 35px;
+
+            .wraptitle {
+                width: 400px;
+                color: #fff;
+
+                .titleitem1 {
+                    font-size: 26px;
+
+                    h1 {
+                        margin: 0;
+                    }
+                }
+
+                .titleitem2 {
+                    font-size: 21px;
+                    color: #a3a3a3;
+                }
+            }
+        }
+
+        .main {
+            .wrapmain {
+                display: flex;
+                justify-content: center;
+
+                .mainitemplus,
+                .mainitempremium {
+                    width: 50%;
+                    background: radial-gradient(139.39% 100% at 0% 0%, #4e2a8c 0%, rgba(78, 42, 140, 0.26) 100%);
+                    padding: 20px;
+                    color: #fff;
+                    border-radius: 14px;
+                    margin: 0 10px;
+                    max-width: 400px;
+
+                    .title {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 15px;
+
+                        .text {
+                            font-size: 35px;
+                            font-weight: 600;
+                        }
+
+                        svg {
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .price {
+                        margin-bottom: 15px;
+
+                        .pricetext {
+                            font-size: 28px;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .btnsubmit {
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid;
+                        margin-bottom: 15px;
+
+                        .btn {
+                            text-align: center;
+                            padding: 10px 20px;
+                            background-color: #9457ff;
+                            border-radius: 18px;
+                            cursor: pointer;
+                        }
+
+                        .btnpremium {
+                            background-color: #dca519;
+                            text-align: center;
+                            padding: 10px 20px;
+                            border-radius: 18px;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .titlepermissions {
+                        font-size: 17px;
+                        font-weight: 600;
+                        margin-bottom: 15px;
+                    }
+
+                    .listpermissions {
+                        .permissionsitem {
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+
+                .mainitempremium {
+                    background: radial-gradient(148.32% 100% at 0% 0%, #795B0E 0%, rgba(121, 91, 14, 0.16) 100%);
+                }
+            }
+        }
+    }
+
+}

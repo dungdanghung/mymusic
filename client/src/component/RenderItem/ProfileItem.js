@@ -59,16 +59,16 @@ function Profile_Item({ data, itembirthday = false }) {
             {
                 itembirthday ?
                     <div className="birthimage">
-                        <img src="http://localhost:4000/images/orther/birth.jpg" />
+                        <img src="http://localhost:4000/orther/birth.jpg" />
                     </div>
                     :
                     <div className="maincontent">
                         <div className="content" onClick={handlediskplay}>
                             <div className="wrapdisk">
-                                <img src="http://localhost:4000/images/orther/music_128x128.png" />
+                                <img src="http://localhost:4000/orther/music_128x128.png" />
                             </div>
                             <div className="disk" style={{ left: "0%", animationPlayState: 'paused' }}>
-                                <img src="http://localhost:4000/images/orther/music_128x128.png" />
+                                <img src="http://localhost:4000/orther/music_128x128.png" />
                             </div>
                         </div>
                     </div>

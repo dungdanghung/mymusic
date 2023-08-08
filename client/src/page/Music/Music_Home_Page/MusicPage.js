@@ -4,18 +4,17 @@ import "../MusicPageBase.scss"
 import MusicController from "../../../component/Layout/playmusic";
 import SidebarMusic from "../../../component/Layout/sidebar/SidebarMusic";
 import ListNextSong from "../../../component/Layout/listnextsong";
+import ContentHomePage from "../../../component/ContentPage/ContentHomPage/ContentHomePage";
 
 function MusicPage() {
 
 
     return (
         <div className="musicpage">
-            <Header />
+            {/* <Header /> */}
             <div className="wrapcontentmusicpage">
                 <SidebarMusic />
-                <div className="content">
-                    <h1>music page</h1>
-                </div>
+                <ContentHomePage />
                 <ListNextSong />
             </div>
             <MusicController />
