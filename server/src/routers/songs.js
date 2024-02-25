@@ -10,7 +10,6 @@ Router.delete("/deleteinteract/", AuthenticateToken, SongController.DeleteIntera
 Router.get("/gethistory", AuthenticateToken, SongController.GetHistory)
 Router.post("/sethistorysong", AuthenticateToken, SongController.SetHistorySong)
 Router.get("/getheartsongs", AuthenticateToken, SongController.GetHeartSongs)
-Router.post("/uploadsong", AuthenticateToken, SongController.Uploadsong)
 Router.get("/getthumbnailhotsong", SongController.GetHotThumbnail)
 
 module.exports = Router

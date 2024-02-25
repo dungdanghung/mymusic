@@ -1,6 +1,9 @@
 const { users, refreshtoken, GetHeart, CreateNewUser, GetUser, GetListeningHistory } = require("../cache/index")
 const { ReadAccessToken, CreateToken, CheckIsNumber } = require("../services/auth")
 const bcrypt = require("bcrypt")
+const sharp = require('sharp')
+const fs = require('fs')
+
 
 async function Login(req, res) {
     const data = {
@@ -109,10 +112,46 @@ async function Getuser(req, res) {
 }
 
 async function UpgradeVip(req, res) {
-    console.log(123)
+    sharp('./store/images/orther/birth.jpg')
+        .extract({ left: 0, top: 100, width: 100, height: 100 })
+        .toFile('./kangta.new.jpg', function (err) {
+            if (err) console.log(err);
+        })
+
+    return res.json({ test: 1233 })
 }
 
+async function CropAvatar(req, res) {
+    let x = req.body.x ? parseInt(req.body.x) : 0
+    let y = req.body.y ? parseInt(req.body.y) : 0
+    try {
+        const fileName = req.files.avatar.name;
+        sharp(req.files.avatar.data)
+            .extract({ left: x, top: y, width: 300, height: 300 })
+            .toFile(`./store/images/avatar/${fileName}`, function (err) {
+                if (!err) {
+                    const options = {
+                        root: `./store/images/avatar/`
+                    };
+                    return res.sendFile(fileName, options);
+                } else {
 
+                }
+            })
+    } catch (error) {
+        return res.json({
+            success: false
+        })
+    }
+}
+
+async function getAvatarCrop(req, res) {
+    const options = {
+        root: `./store/images/avatar/`
+    };
+    const fileName = req.query.filename;
+    return res.sendFile(fileName, options);
+}
 
 
 module.exports = {
@@ -120,5 +159,7 @@ module.exports = {
     Login,
     Logout,
     Getuser,
-    UpgradeVip
+    UpgradeVip,
+    CropAvatar,
+    getAvatarCrop
 }

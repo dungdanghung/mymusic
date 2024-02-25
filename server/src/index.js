@@ -16,12 +16,11 @@ app.use(cors({
     "preflightContinue": false,
 }))
 
-
 app.use(fileUpload({
     // useTempFiles: true,
     // tempFileDir: './src/songdata'
 }));
-InitCache()
+// InitCache()
 
 Router(app)
 function getIPAddress() {
